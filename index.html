@@ -5,306 +5,730 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abhishek Verma - Portfolio</title>
+    <meta name="description" content="Portfolio of Abhishek Verma — B.Tech CSE student at IIT Indore, Full-Stack Developer.">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <script type="module">
-        import { createIcons, ArrowRight, Briefcase, Code, User, GraduationCap, Mail, Phone, Github, Linkedin, Zap, Database } from 'https://cdn.skypack.dev/lucide@latest';
-        createIcons({ icons: { ArrowRight, Briefcase, Code, User, GraduationCap, Mail, Phone, Github, Linkedin, Zap, Database } });
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
     </script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        :root {
+            --purple: #a855f7;
+            --orange: #f97316;
+            --yellow: #facc15;
+        }
+
+        * { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
+            background: #0a0a0f;
+            overflow-x: hidden;
         }
 
-        .section-padding {
-            padding: 5rem 1rem;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
+        /* ── Animated Gradient Text ── */
         .text-gradient {
-            background-image: linear-gradient(to right, #a855f7, #f97316, #facc15);
+            background: linear-gradient(270deg, #a855f7, #f97316, #facc15, #a855f7);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: gradientShift 6s ease infinite;
         }
 
-        .styled-card {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .styled-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(168, 85, 247, 0.3), 0 8px 10px -6px rgba(249, 115, 22, 0.3);
-            background-color: #27272a;
+        /* ── Background Glow Orbs ── */
+        .bg-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
         }
+
+        .glow-purple {
+            width: 500px; height: 500px;
+            background: #a855f7;
+            top: -100px; left: -100px;
+            animation: floatOrb 12s ease-in-out infinite;
+        }
+
+        .glow-orange {
+            width: 400px; height: 400px;
+            background: #f97316;
+            bottom: 100px; right: -100px;
+            animation: floatOrb 15s ease-in-out infinite reverse;
+        }
+
+        .glow-yellow {
+            width: 350px; height: 350px;
+            background: #facc15;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: floatOrb 18s ease-in-out infinite;
+        }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(40px, -30px); }
+            50% { transform: translate(-20px, 50px); }
+            75% { transform: translate(30px, 20px); }
+        }
+
+        /* ── Floating Profile Photo ── */
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+
+        /* ── Glass Card ── */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow 0.4s cubic-bezier(.4,0,.2,1), border-color 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px -12px rgba(168, 85, 247, 0.25), 0 8px 20px -8px rgba(249, 115, 22, 0.2);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        /* ── Project Card ── */
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow 0.4s cubic-bezier(.4,0,.2,1), border-color 0.4s ease;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, #a855f7, #f97316, #facc15);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card:hover::before { opacity: 1; }
 
         .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px -5px rgba(168, 85, 247, 0.5), 0 5px 15px -3px rgba(249, 115, 22, 0.4);
-            background-color: #27272a;
+            transform: translateY(-6px);
+            box-shadow: 0 25px 60px -15px rgba(168, 85, 247, 0.3), 0 10px 25px -10px rgba(249, 115, 22, 0.2);
+            border-color: rgba(168, 85, 247, 0.25);
         }
 
         .project-card:hover .arrow-icon {
-            transform: translateX(4px);
+            transform: translateX(5px);
         }
 
-        .section-header {
-            position: relative;
+        /* ── Skill Pill ── */
+        .skill-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-pill:hover {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .skill-pill-orange:hover {
+            background: rgba(249, 115, 22, 0.15);
+            border-color: rgba(249, 115, 22, 0.4);
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);
+        }
+
+        .skill-pill-yellow:hover {
+            background: rgba(250, 204, 21, 0.15);
+            border-color: rgba(250, 204, 21, 0.4);
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.2);
+        }
+
+        /* ── Tech Badge ── */
+        .tech-badge {
             display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            background: rgba(168, 85, 247, 0.12);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        /* ── Course Chip ── */
+        .course-chip {
+            display: inline-block;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #d1d5db;
+            transition: all 0.3s ease;
+        }
+
+        .course-chip:hover {
+            background: rgba(168, 85, 247, 0.12);
+            border-color: rgba(168, 85, 247, 0.3);
+            color: #e9d5ff;
+        }
+
+        /* ── Section Divider ── */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), rgba(249, 115, 22, 0.3), transparent);
+        }
+
+        /* ── Scroll Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── CTA Button ── */
+        .btn-primary {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(168, 85, 247, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* ── Link Buttons ── */
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 1.1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn-purple {
+            background: rgba(168, 85, 247, 0.12);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .link-btn-purple:hover {
+            background: rgba(168, 85, 247, 0.25);
+            box-shadow: 0 0 18px rgba(168, 85, 247, 0.25);
+        }
+
+        /* ── Profile ring ── */
+        .profile-ring {
+            background: conic-gradient(from 0deg, #a855f7, #f97316, #facc15, #a855f7);
+            padding: 4px;
+            border-radius: 9999px;
+        }
+
+        /* ── Glassmorphism Navbar ── */
+        .glass-nav {
+            background: rgba(10, 10, 15, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* ── Timeline connector ── */
+        .timeline-connector {
+            position: relative;
+        }
+
+        .timeline-connector::before {
+            content: '';
+            position: absolute;
+            left: 27px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, rgba(168, 85, 247, 0.4), rgba(249, 115, 22, 0.4), rgba(250, 204, 21, 0.4));
+        }
+
+        .timeline-dot {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            border: 2px solid;
+            background: #0a0a0f;
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        /* ── Section padding ── */
+        .section-padding {
+            padding: 6rem 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .section-padding {
+                padding: 4rem 1rem;
+            }
         }
     </style>
 </head>
 
-<body class="bg-gray-900 text-gray-200 antialiased">
+<body class="text-gray-200 antialiased relative">
+
+    <!-- Background Glow Orbs -->
+    <div class="bg-glow glow-purple"></div>
+    <div class="bg-glow glow-orange"></div>
+    <div class="bg-glow glow-yellow"></div>
 
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800 shadow-2xl">
+    <header class="sticky top-0 z-50 glass-nav shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="#hero" class="text-xl font-bold text-gradient">Abhishek Verma</a>
-            <nav class="space-x-4 flex">
-                <a href="#about" class="text-gray-300 hover:text-purple-400 transition duration-300 hidden sm:inline">About</a>
-                <a href="#skills" class="text-gray-300 hover:text-purple-400 transition duration-300 hidden sm:inline">Skills</a>
-                <a href="#projects" class="text-gray-300 hover:text-purple-400 transition duration-300 hidden sm:inline">Projects</a>
-                <a href="#education" class="text-gray-300 hover:text-purple-400 transition duration-300 hidden sm:inline">Education</a>
+            <a href="#hero" class="text-xl font-bold text-gradient" style="font-family: 'Plus Jakarta Sans', sans-serif;">Abhishek Verma</a>
+            <nav class="space-x-2 sm:space-x-4 flex items-center">
+                <a href="#about" class="text-gray-400 hover:text-purple-400 transition duration-300 hidden sm:inline text-sm font-medium">About</a>
+                <a href="#skills" class="text-gray-400 hover:text-purple-400 transition duration-300 hidden sm:inline text-sm font-medium">Skills</a>
+                <a href="#projects" class="text-gray-400 hover:text-purple-400 transition duration-300 hidden sm:inline text-sm font-medium">Projects</a>
+                <a href="#education" class="text-gray-400 hover:text-purple-400 transition duration-300 hidden sm:inline text-sm font-medium">Education</a>
+                <a href="#courses" class="text-gray-400 hover:text-purple-400 transition duration-300 hidden sm:inline text-sm font-medium">Courses</a>
                 <a href="#contact"
-                    class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-1 px-3 rounded-full transition duration-300 text-sm shadow-md shadow-purple-500/30">Contact</a>
+                    class="btn-primary text-white font-semibold py-1.5 px-4 rounded-full text-sm">Contact</a>
             </nav>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto">
+    <main class="max-w-7xl mx-auto relative z-10">
 
         <!-- Hero Section -->
-        <section id="hero" class="section-padding flex flex-col md:flex-row items-center md:justify-between text-center md:text-left">
-            <div class="md:w-3/5 space-y-4">
-                <p class="text-lg text-purple-400 font-medium tracking-widest uppercase">Hello, I'm</p>
-                <h1 class="text-6xl sm:text-7xl font-extrabold leading-tight">
-                    <span class="text-white">Abhishek </span>
-                    <span class="text-white">Verma</span>
+        <section id="hero" class="section-padding flex flex-col md:flex-row items-center md:justify-between text-center md:text-left min-h-[85vh]">
+            <div class="md:w-3/5 space-y-5">
+                <p class="text-sm text-purple-400 font-semibold tracking-[0.25em] uppercase">Hello, I'm</p>
+                <h1 class="text-5xl sm:text-7xl font-extrabold leading-tight text-gradient">
+                    Abhishek Verma
                 </h1>
-                <h2 class="text-2xl font-semibold text-gray-400">B.Tech Computer Science and Engineering Student</h2>
-                <h3 class="text-xl font-light text-gray-500">Indian Institute Of Technology Indore (IIT Indore)</h3>
+                <h2 class="text-xl sm:text-2xl font-semibold text-gray-400">B.Tech Computer Science and Engineering Student</h2>
+                <h3 class="text-lg font-light text-gray-500">Indian Institute Of Technology Indore (IIT Indore)</h3>
                 <div class="pt-6 flex justify-center md:justify-start space-x-4">
                     <a href="#projects"
-                        class="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-xl transition duration-300 shadow-xl hover:shadow-purple-500/50">
-                        View Projects <i data-lucide="arrow-right" class="w-5 h-5 ml-1"></i>
+                        class="btn-primary flex items-center space-x-2 text-white font-bold py-3 px-7 rounded-xl">
+                        View Projects <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
                     </a>
                     <a href="https://linkedin.com/in/abhishek-verma-900178329/" target="_blank"
-                        class="flex items-center space-x-2 bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold py-3 px-6 rounded-xl transition duration-300">
-                        <i data-lucide="linkedin" class="w-5 h-5"></i> LinkedIn
+                        class="btn-secondary flex items-center space-x-2 text-gray-300 font-bold py-3 px-6 rounded-xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn
                     </a>
                 </div>
             </div>
-            <div class="mt-10 md:mt-0 md:w-2/5 flex justify-center">
-                <div class="overflow-hidden w-50 h-50 sm:w-80 sm:h-80 bg-gray-700 rounded-full flex items-center justify-center border-4 border-purple-500 shadow-2xl">
-                    <img src="./myprofile.jpg" alt="" class="w-full">
+            <div class="mt-12 md:mt-0 md:w-2/5 flex justify-center">
+                <div class="float-animation">
+                    <div class="profile-ring">
+                        <div class="overflow-hidden w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-gray-900 flex items-center justify-center">
+                            <img src="./myprofile.jpeg" alt="Abhishek Verma" class="w-full h-full object-cover">
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <div class="section-divider"></div>
+
         <!-- About Section -->
-        <section id="about" class="section-padding border-t border-gray-800">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-4xl font-bold mb-12 text-center section-header">
+        <section id="about" class="section-padding">
+            <div class="max-w-4xl mx-auto reveal">
+                <h2 class="text-4xl font-bold mb-12 text-center">
                     <i data-lucide="user" class="w-8 h-8 inline mr-2 text-purple-400"></i> About Me
                 </h2>
-                <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl space-y-4 styled-card">
-                    <p class="text-gray-300 leading-relaxed text-lg">I am a dedicated B.Tech Computer Science and Engineering student at <strong>IIT Indore</strong>
-                        with a strong foundation in full-stack development and problem-solving. My current academic performance, reflected by a <strong>8.37 CGPA</strong>, demonstrates my commitment to excellence.</p>
+                <div class="glass-card p-8 rounded-2xl space-y-5">
+                    <p class="text-gray-300 leading-relaxed text-lg">I am a dedicated B.Tech Computer Science and Engineering student at <strong class="text-purple-300">IIT Indore</strong>
+                        with a strong foundation in full-stack development and problem-solving. My current academic performance, reflected by a <strong class="text-purple-300">8.21 CGPA</strong>, demonstrates my commitment to excellence.</p>
                     <p class="text-gray-300 leading-relaxed text-lg">I specialize in building robust and scalable applications, leveraging modern stacks like
-                        <strong>React, NodeJS, ExpressJS, and MySQL</strong>. I am passionate about creating clean, efficient, and impactful solutions — from user-friendly ride-sharing platforms to performance-optimized data aggregation APIs.
+                        <strong class="text-orange-300">React, NodeJS, ExpressJS, and MySQL</strong>. I am passionate about creating clean, efficient, and impactful solutions — from user-friendly supermarket platforms to performance-optimized data aggregation APIs.
                         I am constantly seeking opportunities to apply my technical skills and contribute to innovative projects.</p>
-                    <div class="pt-4 border-t border-gray-700 mt-6">
-                        <p class="text-sm font-semibold text-purple-400">Key Achievements:</p>
+                    <div class="pt-5 border-t border-white/10 mt-6">
+                        <p class="text-sm font-semibold text-purple-400 mb-1">Key Achievements:</p>
                         <p class="text-sm text-gray-400">JEE Advanced AIR 3379</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <div class="section-divider"></div>
+
         <!-- Skills Section -->
-        <section id="skills" class="section-padding border-t border-gray-800 bg-gray-950">
-            <h2 class="text-4xl font-bold mb-12 text-center section-header">
-                <i data-lucide="code" class="w-8 h-8 inline mr-2 text-purple-400"></i> Technical Skills
-            </h2>
-            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section id="skills" class="section-padding">
+            <div class="reveal">
+                <h2 class="text-4xl font-bold mb-12 text-center">
+                    <i data-lucide="code" class="w-8 h-8 inline mr-2 text-purple-400"></i> Technical Skills
+                </h2>
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
 
-                <div class="bg-gray-800 p-6 rounded-xl styled-card border-l-4 border-purple-500">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center text-purple-300"><i data-lucide="zap"
-                        class="w-5 h-5 mr-2"></i> Programming</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>Python</li>
-                        <li>C++</li>
-                        <li>JavaScript</li>
-                    </ul>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold mb-5 flex items-center text-purple-300">
+                            <i data-lucide="zap" class="w-5 h-5 mr-2"></i> Programming
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-pill text-gray-300">C++</span>
+                            <span class="skill-pill text-gray-300">JavaScript</span>
+                            <span class="skill-pill text-gray-300">Python</span>
+                            <span class="skill-pill text-gray-300">Solidity*</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold mb-5 flex items-center text-orange-300">
+                            <i data-lucide="briefcase" class="w-5 h-5 mr-2"></i> Frameworks & Tools
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-pill skill-pill-orange text-gray-300">React.JS</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">Next.JS</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">Node.JS</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">ExpressJS</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">HTML</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">CSS</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">MaterialUI</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">Bootstrap</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">Git</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">Github</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">Matplotlib*</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">Numpy*</span>
+                            <span class="skill-pill skill-pill-orange text-gray-300">Pandas*</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold mb-5 flex items-center text-yellow-400">
+                            <i data-lucide="database" class="w-5 h-5 mr-2"></i> Database
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-pill skill-pill-yellow text-gray-300">MySQL</span>
+                            <span class="skill-pill skill-pill-yellow text-gray-300">PostgreSQL</span>
+                            <span class="skill-pill skill-pill-yellow text-gray-300">MongoDB*</span>
+                        </div>
+                    </div>
+
                 </div>
-
-                <div class="bg-gray-800 p-6 rounded-xl styled-card border-l-4 border-orange-500">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center text-orange-300"><i data-lucide="briefcase"
-                            class="w-5 h-5 mr-2"></i> Frameworks & Tools</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>React.JS, HTML, CSS</li>
-                        <li>NodeJS, ExpressJS</li>
-                        <li>MaterialUI, Bootstrap</li>
-                        <li>Git, Github</li>
-                        <li>Matplotlib*, Numpy*, Pandas*</li>
-                    </ul>
-                    <p class="text-sm text-gray-500 pt-2">* Elementary proficiency</p>
-                </div>
-
-                <div class="bg-gray-800 p-6 rounded-xl styled-card border-l-4 border-yellow-400">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center text-yellow-400"><i data-lucide="database"
-                            class="w-5 h-5 mr-2"></i> Database</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>MySQL</li>
-                        <li>MongoDB</li>
-                    </ul>
-                </div>
-
+                <p class="text-sm text-gray-600 pt-4 text-center">* Elementary proficiency</p>
             </div>
         </section>
+
+        <div class="section-divider"></div>
 
         <!-- Projects Section -->
-        <section id="projects" class="section-padding border-t border-gray-800">
-            <h2 class="text-4xl font-bold mb-12 text-center section-header">
-                <i data-lucide="briefcase" class="w-8 h-8 inline mr-2 text-purple-400"></i> Featured Projects
-            </h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <section id="projects" class="section-padding">
+            <div class="reveal">
+                <h2 class="text-4xl font-bold mb-12 text-center">
+                    <i data-lucide="briefcase" class="w-8 h-8 inline mr-2 text-purple-400"></i> Featured Projects
+                </h2>
+                <div class="flex flex-col gap-8 max-w-5xl mx-auto">
 
-                <!-- Quick Chat Project -->
-                <div
-                    class="project-card bg-gray-800 p-6 rounded-xl shadow-xl transition duration-500 ease-in-out hover:shadow-purple-500/50 hover:bg-gray-700/70 border-l-4 border-r-4 border-purple-500 col-span-1 lg:col-span-2">
-                    <h3 class="text-2xl font-bold mb-2 text-white-400">Quick Chat - Real-time Messaging App</h3>
-                    <p class="text-sm font-medium text-gray-400 mb-4">MERN Stack | Socket.IO | JWT | Cloudinary</p>
-                    <p class="text-gray-300 mb-4">Quick Chat is a modern real-time messaging application enabling seamless communication with live typing indicators, media sharing, and profile customization.</p>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1 ml-4 mb-6 text-sm">
-                        <li>Real-time chat using WebSockets (Socket.IO).</li>
-                        <li>JWT authentication and secure login/register flow.</li>
-                        <li>Image sharing via Cloudinary.</li>
-                        <li>Fully responsive UI built with React and Tailwind CSS.</li>
-                    </ul>
-                    <div class="flex space-x-4">
-                        <a href="https://chat-app-tau-ochre-52.vercel.app" target="_blank"
-                            class="text-purple-400 font-semibold flex items-center hover:text-purple-300 transition duration-300">
-                            Live Demo <i data-lucide="arrow-right" class="w-4 h-4 ml-2 arrow-icon transition-transform"></i>
-                        </a>
-                        <a href="https://github.com/abhishekverma9/Chat-App" target="_blank"
-                            class="text-purple-400 font-semibold flex items-center hover:text-purple-300 transition duration-300">
-                            GitHub <i data-lucide="arrow-right" class="w-4 h-4 ml-2 arrow-icon transition-transform"></i>
-                        </a>
+                    <!-- PingUp -->
+                    <div class="project-card p-7 rounded-2xl">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 gap-2">
+                            <h3 class="text-2xl font-bold text-white">PingUp - Real-Time Social Media & Chat Platform</h3>
+                            <span class="text-xs font-semibold text-gray-400 bg-white/5 border border-white/10 px-3 py-1 rounded-full whitespace-nowrap">May 2026 – Jun. 2026</span>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Node.js</span>
+                            <span class="tech-badge">Express.js</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">Socket.io</span>
+                            <span class="tech-badge">Tailwind CSS</span>
+                            <span class="tech-badge">Cloudinary</span>
+                        </div>
+                        <ul class="list-disc list-inside text-gray-400 space-y-2 ml-2 mb-6 text-sm leading-relaxed">
+                            <li>Architected a full-stack social platform backed by a <strong class="text-gray-300">16-table normalized MySQL schema</strong>, utilizing <strong class="text-gray-300">scheduled events</strong> and <strong class="text-gray-300">cascading deletes</strong> for automated data lifecycle management (e.g., 24-hour story expiry).</li>
+                            <li>Engineered a <strong class="text-gray-300">real-time messaging engine</strong> via <strong class="text-gray-300">Socket.io</strong>, featuring live typing indicators, multi-state read receipts, and push notifications, supported by an in-memory active user tracking system.</li>
+                            <li>Implemented a highly secure <strong class="text-gray-300">dual-token JWT authentication</strong> pipeline with <strong class="text-gray-300">HTTP-only cookies</strong> and <strong class="text-gray-300">Google OAuth</strong>, alongside a session management module tracking device metadata for remote revocation.</li>
+                            <li>Built a responsive frontend delivering an <strong class="text-gray-300">infinite-scroll feed</strong>, a rich media <strong class="text-gray-300">story composer</strong>, and <strong class="text-gray-300">threaded nested comments</strong>, optimizing asset delivery through a <strong class="text-gray-300">Cloudinary CDN</strong> integration.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="https://pingup-sepia.vercel.app/" target="_blank" class="link-btn link-btn-purple">
+                                Live Demo <i data-lucide="arrow-right" class="w-4 h-4 arrow-icon transition-transform"></i>
+                            </a>
+                            <a href="https://github.com/abhishekverma9/PingUp" target="_blank" class="link-btn link-btn-purple">
+                                GitHub <i data-lucide="arrow-right" class="w-4 h-4 arrow-icon transition-transform"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Forever Project -->
-                <div
-                    class="project-card bg-gray-800 p-6 rounded-xl shadow-xl transition duration-500 ease-in-out hover:shadow-purple-500/50 hover:bg-gray-700/70 border-l-4 border-r-4 border-purple-500 col-span-1 lg:col-span-2">
-                    <h3 class="text-2xl font-bold mb-2 text-white-400">Forever - Full-stack E-Commerce Platform</h3>
-                    <p class="text-sm font-medium text-gray-400 mb-4">MERN Stack | Razorpay | JWT | Cloudinary</p>
-                    <p class="text-gray-300 mb-4">Forever is a complete e-commerce web application designed with a scalable architecture and a seamless shopping experience for both users and admins.</p>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1 ml-4 mb-6 text-sm">
-                        <li>Secure authentication with JWT, bcrypt, and Google OAuth.</li>
-                        <li>Razorpay payment integration for smooth checkout.</li>
-                        <li>Admin dashboard for managing user accounts, products & orders.</li>
-                        <li>Product image storage and delivery via Cloudinary.</li>
-                    </ul>
-                    <div class="flex space-x-4">
-                        <a href="https://forever-frontend-six-theta.vercel.app" target="_blank"
-                            class="text-purple-400 font-semibold flex items-center hover:text-purple-300 transition duration-300">
-                            Live Demo <i data-lucide="arrow-right" class="w-4 h-4 ml-2 arrow-icon transition-transform"></i>
-                        </a>
-                        <a href="https://github.com/abhishekverma9/E-Commerce-website" target="_blank"
-                            class="text-purple-400 font-semibold flex items-center hover:text-purple-300 transition duration-300">
-                            GitHub <i data-lucide="arrow-right" class="w-4 h-4 ml-2 arrow-icon transition-transform"></i>
-                        </a>
+                    <!-- Gymkhana Portal -->
+                    <div class="project-card p-7 rounded-2xl">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 gap-2">
+                            <h3 class="text-2xl font-bold text-white">Gymkhana Portal - IIT Indore</h3>
+                            <span class="text-xs font-semibold text-gray-400 bg-white/5 border border-white/10 px-3 py-1 rounded-full whitespace-nowrap">Oct. 2025 – Apr. 2026</span>
+                        </div>
+                        <p class="text-sm font-medium text-purple-300 mb-3">Gymkhana Web Team</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Next.js</span>
+                            <span class="tech-badge">Tailwind CSS</span>
+                            <span class="tech-badge">PostgreSQL</span>
+                            <span class="tech-badge">Supabase</span>
+                            <span class="tech-badge">NextAuth.js</span>
+                            <span class="tech-badge">pdf-lib</span>
+                        </div>
+                        <ul class="list-disc list-inside text-gray-400 space-y-2 ml-2 mb-6 text-sm leading-relaxed">
+                            <li>Engineered a secure <strong class="text-gray-300">Role-Based Access Control (RBAC)</strong> system to serve <strong class="text-gray-300">6 dedicated, isolated dashboards</strong> for students, club heads, and multi-level administration.</li>
+                            <li>Built comprehensive, <strong class="text-gray-300">API-driven management systems</strong> for end-to-end proposal tracking, cross-council inventory oversight and complete <strong class="text-gray-300">event lifecycle coordination</strong>.</li>
+                            <li>Developed a centralized <strong class="text-gray-300">financial bill repository</strong> featuring <strong class="text-gray-300">secure document upload workflows</strong> for multi-level administrative review, alongside a dynamic management module.</li>
+                            <li>Designed an immersive, responsive UI incorporating <strong class="text-gray-300">interactive 3D radial menus</strong> and <strong class="text-gray-300">dynamic visual effects</strong>.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="https://github.com/web-team-iiti/Gymkhana_website_2025" target="_blank" class="link-btn link-btn-purple">
+                                GitHub <i data-lucide="arrow-right" class="w-4 h-4 arrow-icon transition-transform"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
 
+                    <!-- Shop4Ever -->
+                    <div class="project-card p-7 rounded-2xl">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 gap-2">
+                            <h3 class="text-2xl font-bold text-white">Shop4Ever - Supermarket Management System</h3>
+                            <span class="text-xs font-semibold text-gray-400 bg-white/5 border border-white/10 px-3 py-1 rounded-full whitespace-nowrap">Aug. 2025 – Nov. 2025</span>
+                        </div>
+                        <p class="text-sm font-medium text-purple-300 mb-3">Dr. Nagendra Kumar</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Node.js</span>
+                            <span class="tech-badge">Express.js</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">Tailwind CSS</span>
+                            <span class="tech-badge">Brevo API</span>
+                        </div>
+                        <ul class="list-disc list-inside text-gray-400 space-y-2 ml-2 mb-6 text-sm leading-relaxed">
+                            <li>Developed a secure e-commerce application delivering <strong class="text-gray-300">three customized dashboards</strong> fortified by <strong class="text-gray-300">JWT, Bcrypt, and OTP & Google Auth</strong>, integrated with a <strong class="text-gray-300">RAG-powered AI assistant</strong> for contextual product discovery.</li>
+                            <li>Architected an <strong class="text-gray-300">ACID-compliant, 12-entity 3NF schema</strong> capable of processing <strong class="text-gray-300">50 simultaneous checkouts</strong> without race conditions, utilizing <strong class="text-gray-300">SQL triggers</strong> for <strong class="text-gray-300">&lt;150ms</strong> inventory synchronization.</li>
+                            <li>Accelerated complex database retrieval and reduced query latency by <strong class="text-gray-300">~40%</strong> through the strategic implementation of <strong class="text-gray-300">B+ Tree indexing</strong> techniques.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="https://shop4ever.vercel.app/" target="_blank" class="link-btn link-btn-purple">
+                                Live Demo <i data-lucide="arrow-right" class="w-4 h-4 arrow-icon transition-transform"></i>
+                            </a>
+                            <a href="https://github.com/abhishekverma9/supermarket" target="_blank" class="link-btn link-btn-purple">
+                                GitHub <i data-lucide="arrow-right" class="w-4 h-4 arrow-icon transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Kredent -->
+                    <div class="project-card p-7 rounded-2xl">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 gap-2">
+                            <h3 class="text-2xl font-bold text-white">Kredent - Decentralized Identity Verification</h3>
+                            <span class="text-xs font-semibold text-gray-400 bg-white/5 border border-white/10 px-3 py-1 rounded-full whitespace-nowrap">Mar. 2026 – May 2026</span>
+                        </div>
+                        <p class="text-sm font-medium text-purple-300 mb-3">Dr. Subhra Mazumdar</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="tech-badge">Solidity</span>
+                            <span class="tech-badge">Hardhat</span>
+                            <span class="tech-badge">Ethers.js</span>
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Node.js</span>
+                            <span class="tech-badge">Express.js</span>
+                            <span class="tech-badge">MongoDB</span>
+                        </div>
+                        <ul class="list-disc list-inside text-gray-400 space-y-2 ml-2 mb-6 text-sm leading-relaxed">
+                            <li>Engineered a <strong class="text-gray-300">zero-knowledge KYC dApp</strong> ensuring <strong class="text-gray-300">GDPR compliance</strong> by storing immutable <strong class="text-gray-300">keccak256 hashes on-chain</strong> while securing sensitive documents off-chain via <strong class="text-gray-300">AES-256 encryption</strong>.</li>
+                            <li>Developed Solidity smart contracts with strict <strong class="text-gray-300">Role-Based Access Control (RBAC)</strong> for identity verifiers and integrated a composable <strong class="text-gray-300">KYC-gated DeFi auction</strong> module.</li>
+                            <li>Optimized smart contract storage via <strong class="text-gray-300">tight struct packing</strong> to reduce verification <strong class="text-gray-300">gas costs by 41.4%</strong>, and built a Hardhat test suite achieving <strong class="text-gray-300">~93% overall line coverage</strong>.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="https://github.com/DevanshuDubey/cs218_auth_chain_Merkel_Secure" target="_blank" class="link-btn link-btn-purple">
+                                GitHub <i data-lucide="arrow-right" class="w-4 h-4 arrow-icon transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </section>
+
+        <div class="section-divider"></div>
 
         <!-- Education Section -->
-        <section id="education" class="section-padding border-t border-gray-800 bg-gray-950">
-            <h2 class="text-4xl font-bold mb-12 text-center section-header">
-                <i data-lucide="graduation-cap" class="w-8 h-8 inline mr-2 text-purple-400"></i> Education
-            </h2>
-            <div class="flex flex-col gap-8 max-w-4xl mx-auto">
+        <section id="education" class="section-padding">
+            <div class="reveal">
+                <h2 class="text-4xl font-bold mb-12 text-center">
+                    <i data-lucide="graduation-cap" class="w-8 h-8 inline mr-2 text-purple-400"></i> Education
+                </h2>
+                <div class="flex flex-col gap-0 max-w-4xl mx-auto timeline-connector pl-5">
 
-                <div class="flex items-start bg-gray-800 p-6 rounded-2xl shadow-lg border-l-6 border-purple-500 styled-card">
-                    <div class="flex-shrink-0 pt-1">
-                        <i data-lucide="briefcase" class="w-6 h-6 text-purple-400"></i>
+                    <div class="flex items-start gap-5 pb-8">
+                        <div class="timeline-dot border-purple-500 mt-2"></div>
+                        <div class="glass-card p-6 rounded-2xl flex-grow">
+                            <h3 class="text-xl font-bold text-white">B.Tech Computer Science and Engineering</h3>
+                            <p class="text-md text-purple-300 mt-1">Indian Institute of Technology Indore (IIT Indore)</p>
+                            <p class="text-gray-400 mt-1 font-medium text-sm">2024 – Present | <strong class="text-purple-300">CGPA: 8.21</strong> (Current)</p>
+                        </div>
                     </div>
-                    <div class="ml-4 flex-grow">
-                        <h3 class="text-2xl font-semibold text-white">B.Tech Computer Science and Engineering</h3>
-                        <p class="text-lg text-purple-300">Indian Institute of Technology Indore (IIT Indore)</p>
-                        <p class="text-gray-400 mt-1 font-medium">2024 - Present | <strong>CGPA: 8.37</strong> (Current)</p>
-                        <p class="text-sm text-gray-500 mt-2 border-t border-gray-700 pt-2">Relevant Courses: Linear
-                            Algebra, Basic Calculus</p>
+
+                    <div class="flex items-start gap-5 pb-8">
+                        <div class="timeline-dot border-orange-500 mt-2"></div>
+                        <div class="glass-card p-6 rounded-2xl flex-grow">
+                            <h3 class="text-xl font-bold text-white">Senior Secondary (UP Board)</h3>
+                            <p class="text-md text-orange-300 mt-1">High School</p>
+                            <p class="text-gray-400 mt-1 font-medium text-sm">2024 | <strong class="text-orange-300">Percentage: 95.8%</strong></p>
+                        </div>
                     </div>
+
+                    <div class="flex items-start gap-5">
+                        <div class="timeline-dot border-yellow-400 mt-2"></div>
+                        <div class="glass-card p-6 rounded-2xl flex-grow">
+                            <h3 class="text-xl font-bold text-white">Secondary (UP Board)</h3>
+                            <p class="text-md text-yellow-300 mt-1">High School</p>
+                            <p class="text-gray-400 mt-1 font-medium text-sm">2022 | <strong class="text-yellow-300">Percentage: 89.2%</strong></p>
+                        </div>
+                    </div>
+
                 </div>
-
-                <div class="flex items-start bg-gray-800 p-6 rounded-2xl shadow-lg border-l-6 border-orange-500 styled-card">
-                    <div class="flex-shrink-0 pt-1">
-                        <i data-lucide="graduation-cap" class="w-6 h-6 text-orange-400"></i>
-                    </div>
-                    <div class="ml-4 flex-grow">
-                        <h3 class="text-2xl font-semibold text-white">Senior Secondary (UP Board)</h3>
-                        <p class="text-lg text-orange-300">High School</p>
-                        <p class="text-gray-400 mt-1 font-medium">2024 | <strong>Percentage: 95.2%</strong></p>
-                    </div>
-                </div>
-
-                <div class="flex items-start bg-gray-800 p-6 rounded-2xl shadow-lg border-l-6 border-yellow-400 styled-card">
-                    <div class="flex-shrink-0 pt-1">
-                        <i data-lucide="graduation-cap" class="w-6 h-6 text-yellow-400"></i>
-                    </div>
-                    <div class="ml-4 flex-grow">
-                        <h3 class="text-2xl font-semibold text-white">Secondary (UP Board)</h3>
-                        <p class="text-lg text-yellow-300">High School</p>
-                        <p class="text-gray-400 mt-1 font-medium">2022 | <strong>Percentage: 89.16%</strong></p>
-                    </div>
-                </div>
-
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="section-padding border-t border-gray-800">
-            <h2 class="text-4xl font-bold mb-12 text-center section-header">
-                <i data-lucide="mail" class="w-8 h-8 inline mr-2 text-purple-400"></i> Get In Touch
-            </h2>
-            <div class="max-w-xl mx-auto bg-gray-800 p-8 rounded-2xl shadow-2xl styled-card space-y-6 text-center">
-                <p class="text-xl text-gray-300">I'm currently seeking new opportunities and collaborations. Feel free
-                    to reach out!</p>
+        <div class="section-divider"></div>
 
-                <div class="space-y-3 pt-4 border-t border-gray-700">
-                    <div class="flex items-center justify-center space-x-3">
-                        <i data-lucide="mail" class="w-5 h-5 text-purple-400"></i>
-                        <span class="text-gray-300 font-medium">iamabhishekk1@gmail.com</span>
+        <!-- Courses Section -->
+        <section id="courses" class="section-padding">
+            <div class="reveal">
+                <h2 class="text-4xl font-bold mb-12 text-center">
+                    <i data-lucide="book-open" class="w-8 h-8 inline mr-2 text-purple-400"></i> Key Courses Taken
+                </h2>
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                            <i data-lucide="zap" class="w-5 h-5 mr-2 text-purple-400"></i> Mathematics
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="course-chip">Linear Algebra</span>
+                            <span class="course-chip">Basic Calculus</span>
+                            <span class="course-chip">Differential Equations</span>
+                            <span class="course-chip">Complex Analysis</span>
+                            <span class="course-chip">Mathematics in AIML</span>
+                            <span class="course-chip">Numerical Methods</span>
+                            <span class="course-chip">Discrete Maths</span>
+                        </div>
                     </div>
-                    <div class="flex items-center justify-center space-x-3">
-                        <i data-lucide="phone" class="w-5 h-5 text-purple-400"></i>
-                        <span class="text-gray-300 font-medium">+91-6390762566</span>
+
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                            <i data-lucide="code" class="w-5 h-5 mr-2 text-orange-400"></i> Computer Science
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="course-chip">C++ OOPS</span>
+                            <span class="course-chip">Database & Information Systems</span>
+                            <span class="course-chip">Data Structures & Algorithms</span>
+                            <span class="course-chip">Logic Design</span>
+                            <span class="course-chip">Automata Theory & Logic</span>
+                            <span class="course-chip">Introduction to Blockchain</span>
+                            <span class="course-chip">Programmable & Interoperable Blockchains</span>
+                        </div>
                     </div>
+
                 </div>
+            </div>
+        </section>
 
-                <div class="flex justify-center space-x-6 pt-4">
-                    <a href="https://linkedin.com/in/abhishek-verma-900178329/" target="_blank"
-                        class="text-gray-400 hover:text-purple-400 transition duration-300 transform hover:scale-110">
-                        <i data-lucide="linkedin" class="w-8 h-8"></i>
-                    </a>
-                    <a href="mailto:iamabhishekk1@gmail.com"
-                        class="text-gray-400 hover:text-purple-400 transition duration-300 transform hover:scale-110">
-                        <i data-lucide="mail" class="w-8 h-8"></i>
-                    </a>
-                    <a href="#" target="_blank"
-                        class="text-gray-400 hover:text-purple-400 transition duration-300 transform hover:scale-110">
-                        <i data-lucide="github" class="w-8 h-8"></i>
-                    </a>
+        <div class="section-divider"></div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section-padding">
+            <div class="reveal">
+                <h2 class="text-4xl font-bold mb-12 text-center">
+                    <i data-lucide="mail" class="w-8 h-8 inline mr-2 text-purple-400"></i> Get In Touch
+                </h2>
+                <div class="max-w-xl mx-auto glass-card p-8 rounded-2xl space-y-6 text-center">
+                    <p class="text-xl text-gray-300">I'm currently seeking new opportunities and collaborations. Feel free
+                        to reach out!</p>
+
+                    <div class="space-y-3 pt-4 border-t border-white/10">
+                        <div class="flex items-center justify-center space-x-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-purple-400"></i>
+                            <span class="text-gray-300 font-medium">iamabhishekk1@gmail.com</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-purple-400"></i>
+                            <span class="text-gray-300 font-medium">cse240001005@iiti.ac.in</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-purple-400"></i>
+                            <span class="text-gray-300 font-medium">+91-6390762566</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center space-x-5 pt-4">
+                        <a href="https://linkedin.com/in/abhishek-verma-900178329/" target="_blank"
+                            class="text-gray-500 hover:text-purple-400 transition duration-300 transform hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                        </a>
+                        <a href="mailto:iamabhishekk1@gmail.com"
+                            class="text-gray-500 hover:text-purple-400 transition duration-300 transform hover:scale-110">
+                            <i data-lucide="mail" class="w-7 h-7"></i>
+                        </a>
+                        <a href="https://github.com/abhishekverma9" target="_blank"
+                            class="text-gray-500 hover:text-purple-400 transition duration-300 transform hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -312,11 +736,25 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-950 border-t border-gray-800 mt-12 py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
-            &copy; 2025 Abhishek Verma.
+    <footer class="relative z-10 border-t border-white/5 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-600 text-sm">Built with passion by <span class="text-gradient font-semibold">Abhishek Verma</span></p>
+            <p class="text-gray-700 text-xs mt-1">&copy; 2026 All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Scroll Reveal Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 
 </body>
 
